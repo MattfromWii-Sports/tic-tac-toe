@@ -1,0 +1,30 @@
+* {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+html {
+    font-size: 12px;
+}
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#grid {
+    background: black;
+    display: grid;
+    grid-template-columns: repeat(3, 12rem);
+    grid-template-rows: repeat(3, 12rem);
+    gap: .8rem;
+    border: .8rem solid black;
+}
+
+.cells {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10rem;
+    background-color: white;
+}

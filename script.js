@@ -11,8 +11,9 @@ const player1 = player('O', true);
 const player2 = player('X', false);
 
 const gameboard = (() => {
-    const gamePlaces = new Array(9);
+    const gamePlaces = new Array(9); //Creates array filled with undefined
     
+    //Dictates flow of turns (alternating using true/false on player object properties)
     places.forEach(x => x.addEventListener('click', (e) => {
         if (gamePlaces[e.target.dataset.type] !== undefined) return; //if place in array occupied
         if (player1.turn === true) { //player1 turn
@@ -28,11 +29,13 @@ const gameboard = (() => {
             player1.turn = true;
 
         }
-        checkWinner();
+        checkWinnerTie();
+
         console.log(`board game array: ${gamePlaces}`);
     }));
 
-    const checkWinner = (() => {
+    //Checks if a winner exists or the board is full(tie)
+    const checkWinnerTie = (() => {
         const winningPlaces = [
             [0, 1, 2],
             [3, 4, 5],
@@ -51,7 +54,11 @@ const gameboard = (() => {
                 console.log('player2 won');
             }
         });
-
+        //Filters all values in board array, checks if it is full (maintains length of 9)
+        const filterGame = gamePlaces.filter(num => num !== '' || num !== undefined);
+        if (filterGame.length === 9) {
+            console.log('its a tieeee');
+        }
     });
 
 

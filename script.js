@@ -1,5 +1,6 @@
 
-const places = document.querySelectorAll('#grid>.cells');
+const places = document.querySelectorAll('#board>.cells');
+const resetBtn = document.querySelector('.reset-btn');
 
 const player = ((char, stat) => {
     this.token = char;
@@ -61,7 +62,20 @@ const gameboard = (() => {
         }
     });
 
+    resetBtn.addEventListener('click', () => resetBoard());
 
+    const resetBoard = (() => {
+        //update Array places
+        for(let i = 0; i < 9; i++) {
+            gamePlaces[i] = undefined; 
+        }
+        //update Visual places
+        places.forEach((x) => {
+            x.textContent = '';
+        });
+        player1.turn = true;
+        player2.turn = false;
+    });
 
     return {gamePlaces};
 })();

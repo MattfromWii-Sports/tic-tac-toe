@@ -2,17 +2,20 @@
     border: none;
     padding: 0;
     margin: 0;
+    font-family: Verdana, 'Geneva', Tahoma, sans-serif;
 }
 html {
     font-size: 12px;
 }
 body {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    min-height: 100svh;
 }
 
-#grid {
+#board {
     background: black;
     display: grid;
     grid-template-columns: repeat(3, 12rem);
@@ -20,11 +23,21 @@ body {
     gap: .8rem;
     border: .8rem solid black;
 }
-
 .cells {
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 10rem;
     background-color: white;
+}
+
+.reset-btn {
+    margin-top: 4rem;
+    font-size: 2.5rem;
+    border: 3px solid black;
+    border-radius: 1rem;
+    padding: 1rem 4rem;
+}
+.reset-Btn:active {
+    background-color: rgb(199, 186, 186);
 }

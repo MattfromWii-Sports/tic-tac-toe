@@ -1,4 +1,5 @@
 
+const statusText = document.querySelector('.status-text');
 const places = document.querySelectorAll('#board>.cells');
 const resetBtn = document.querySelector('.reset-btn');
 
@@ -8,12 +9,11 @@ const player = ((char, stat) => {
     return {token, turn};
 });
 
-const player1 = player('O', true);
-const player2 = player('X', false);
+const player1 = player('X', true);
+const player2 = player('O', false);
 
 const gameboard = (() => {
-    const gamePlaces = new Array(9); //Creates array filled with undefined
-    
+    const gamePlaces = new Array(9); //Creates array filled with undefined 
     //Dictates flow of turns (alternating using true/false on player object properties)
     places.forEach(x => x.addEventListener('click', (e) => {
         if (gamePlaces[e.target.dataset.type] !== undefined) return; //if place in array occupied
@@ -22,17 +22,15 @@ const gameboard = (() => {
             gamePlaces.splice(e.target.dataset.type, 1, player1.token);
             player1.turn = false;
             player2.turn = true;
-
+            statusText.textContent = 'O\'s turn';
         } else if (player2.turn === true) { //player2 turn
             e.target.textContent = player2.token;
             gamePlaces.splice(e.target.dataset.type, 1, player2.token);
             player2.turn = false;
             player1.turn = true;
-
+            statusText.textContent = 'X\'s turn';
         }
         checkWinnerTie();
-
-        console.log(`board game array: ${gamePlaces}`);
     }));
 
     //Checks if a winner exists or the board is full(tie)
@@ -47,18 +45,26 @@ const gameboard = (() => {
             [0, 4, 8],
             [2, 4, 6]
         ]
+        let winnerFound = false;
+        const stopTurns = (() => {
+            player1.turn = false;
+            player2.turn = false;
+        });
         winningPlaces.forEach((set) => {
             //Checks all three indexes, if same value then it checks if it is the symbol of one of the 2 players
             if(gamePlaces[set[0]] === gamePlaces[set[1]] && gamePlaces[set[1]] === gamePlaces[set[2]] && gamePlaces[set[0]] === player1.token) {
-                console.log('player1 won');
+                stopTurns();
+                statusText.textContent = 'X WINS!';
+                winnerFound = true;
             } else if (gamePlaces[set[0]] === gamePlaces[set[1]] && gamePlaces[set[1]] === gamePlaces[set[2]] && gamePlaces[set[0]] === player2.token) {
-                console.log('player2 won');
+                stopTurns();
+                statusText.textContent = 'O WINS!';
+                winnerFound = true;
             }
         });
-        //Filters all values in board array, checks if it is full (maintains length of 9)
-        const filterGame = gamePlaces.filter(num => num !== '' || num !== undefined);
-        if (filterGame.length === 9) {
-            console.log('its a tieeee');
+        if (winnerFound === false && gamePlaces.filter(num => num !== undefined).length === 9) {
+            stopTurns();
+            statusText.textContent = 'It\s a TIE!';
         }
     });
 
@@ -75,6 +81,7 @@ const gameboard = (() => {
         });
         player1.turn = true;
         player2.turn = false;
+        statusText.textContent = 'X starts first';
     });
 
     return {gamePlaces};

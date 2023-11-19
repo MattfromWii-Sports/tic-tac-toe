@@ -52,3 +52,9 @@ body {
     outline: 5px solid lightcoral;
     border-color: transparent;
 }
+
+@media screen and (max-width: 600px) {
+    html {
+        font-size: 8px;
+    }
+}
